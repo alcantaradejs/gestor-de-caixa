@@ -7,8 +7,6 @@ const notion = new Client({
 })
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
-    const { Client } = require("@notionhq/client")
-
     const data = await notion.databases.query({
         database_id: process.env.PRODUCTS_DATABASE_ID,
     })
