@@ -31,13 +31,13 @@ async function get({name, city, route}: getProps) {
         filter: {
             and: [
                 {
-                    property: "nome",
+                    property: "name",
                     rich_text: {
                         contains: typeof(name) == "string" ? name : ""
                     }
                 },
                 {
-                    property: "cidade",
+                    property: "city",
                     select: {
                         equals: typeof(city) == "string" ? city : ""
                     }
@@ -57,12 +57,14 @@ async function get({name, city, route}: getProps) {
 
 function clientListFormat(data:any) {
     return data.map((client:any) => {
+        const properties = client.properties
+
         return {
-            id: client.properties.id.formula.string,
-            name: client.properties.nome.title[0].text.content,
-            phone: client.properties.phone.phone_number,
-            email: client.properties.email.email,            
-            city: client.properties.cidade.select.name,         
+            id: properties.id.formula.string,
+            name: properties.name.title[0].text.content,
+            phone: properties.phone.phone_number,
+            email: properties.email.email,            
+            city: properties.city.select != null ? properties.city.select.name : null,         
         }
     })
 }

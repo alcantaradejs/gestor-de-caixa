@@ -33,9 +33,9 @@ function clientFormat(client:any) {
 
     return {
         id: properties.id.formula.string,
-        name: properties.nome.title[0].text.content,
+        name: properties.name.title[0].text.content,
         phone: properties.phone.phone_number,
         email: properties.email.email,            
-        city: properties.cidade.select.name, 
+        city: properties.city.select.name, 
     }
 }
