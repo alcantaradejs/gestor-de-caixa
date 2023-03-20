@@ -1,5 +1,7 @@
+import { createClient } from "@/model/notion";
 import { Client } from "@notionhq/client";
 import { NextApiRequest, NextApiResponse } from "next";
+import { getProps, postProps } from "./type";
 
 const notion = new Client({
     auth: process.env.NOTION_TOKEN,
@@ -9,17 +11,18 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     switch (req.method) {
         case "GET":
             res.status(200).json( await get(req.query))
-            break;
+            break
+        case "POST":
+            res.status(200).json(await post(req.body))
+            break
         default:
             res.status(404).send("")
-            break;
+            break
     }
 }
 
-type getProps = {
-    name?: string
-    city?: string
-    route?: string
+async function post(body: postProps) {
+    return createClient(body)
 }
 
 async function get({name, city, route}: getProps) {
