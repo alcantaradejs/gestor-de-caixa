@@ -13,7 +13,9 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             res.status(200).json( await get(req.query))
             break
         case "POST":
-            res.status(200).json(await post(req.body))
+            const response = await post(req.body)
+            if (response) res.status(200).json(response)
+            else res.status(404).send("invalide user format")
             break
         default:
             res.status(404).send("")

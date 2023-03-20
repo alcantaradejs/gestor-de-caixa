@@ -13,18 +13,20 @@ const notion = new Client({
 })
 
 export function createClient({name, phone, email, city, route}:client) {
-    notion.pages.create({
-        parent: {
-            database_id: process.env.CLIENTS_DATABASE_ID
-        },
-        properties: {
-            name:{ title: [{ text:{ content:name } }] },
-            phone:{phone_number: phone ?? null},
-            email: {email: email ?? null},
-            city: {select: { name: city ?? ""}},
-            route: {multi_select: [{name: route ?? ""}]}
-        }
-    })
-
-    return {name, phone, email, city, route}
+    if (name != undefined) {
+        notion.pages.create({
+            parent: {
+                database_id: process.env.CLIENTS_DATABASE_ID
+            },
+            properties: {
+                name:{ title: [{ text:{ content:name } }] },
+                phone:{phone_number: phone ?? null},
+                email: {email: email ?? null},
+                city: {select: { name: city ?? ""}},
+                route: {multi_select: [{name: route ?? ""}]}
+            }
+        })
+    
+        return {name, phone, email, city, route}
+    }    
 }
