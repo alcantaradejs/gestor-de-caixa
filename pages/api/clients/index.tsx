@@ -5,9 +5,24 @@ const notion = new Client({
     auth: process.env.NOTION_TOKEN,
 })
 
-export default async function handler(req:NextApiRequest, res:NextApiResponse) {
-    const {name, city, route} = req.query
-    
+export default async function handler(req:NextApiRequest, res:NextApiResponse) {   
+    switch (req.method) {
+        case "GET":
+            res.status(200).json( await get(req.query))
+            break;
+        default:
+            res.status(404).send("")
+            break;
+    }
+}
+
+type getProps = {
+    name?: string
+    city?: string
+    route?: string
+}
+
+async function get({name, city, route}: getProps) {
     const data = await notion.databases.query({
         database_id: process.env.CLIENTS_DATABASE_ID,
         filter: {
@@ -34,9 +49,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
         }
     })
 
-    const clientList = clientListFormat(data.results) // criar filtro de informações
-
-    res.status(200).json(clientList)
+    return clientListFormat(data.results) // criar filtro de informações
 }
 
 function clientListFormat(data:any) {
