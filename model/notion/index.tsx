@@ -1,3 +1,9 @@
-import { createClient } from "./createClient"
+import { createClient } from "./clients/createClient"
+import { createOrder } from "./orders/createOrder"
+import { getOrder } from "./orders/getOrder"
 
-export { createClient }
+export { 
+    createClient, 
+    createOrder, 
+    getOrder,
+}
