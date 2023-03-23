@@ -9,6 +9,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             else res.status(404).send("")
             break;
         default:
+            res.status(404).json("")
             break;
     }
 }
