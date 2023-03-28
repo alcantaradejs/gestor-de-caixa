@@ -5,5 +5,7 @@ namespace NodeJS {
         CLIENTS_DATABASE_ID: string
         ORDERS_DATABASE_ID: string
         STOCK_DATABASE_ID: string
+        USERS_DATABASE_ID: string
+        TOKEN_DATABASE_ID: string
     }
   }
