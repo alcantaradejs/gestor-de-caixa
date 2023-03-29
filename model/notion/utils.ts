@@ -2,9 +2,9 @@ import { Client } from "@notionhq/client"
 
 export function getRelationID(relations:{id:string}[]) {
     if (relations.length == 1) {
-        return relations[0].id
+        return formatID(relations[0].id)
     }
-    return relations.map(relation => relation.id)
+    return relations.map(relation => formatID(relation.id))
 }
 
 export function createRelation(relation: string | string[]):{id: string}[] {
@@ -13,6 +13,10 @@ export function createRelation(relation: string | string[]):{id: string}[] {
     } else {
         return [{id: typeof relation == "string" ? relation : ""}]
     }
+}
+
+export function formatID(id:string) {
+    return id.match(/[a-z]|[0-9]/gi)?.join("")
 }
 
 export const notion = new Client({

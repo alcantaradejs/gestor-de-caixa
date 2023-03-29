@@ -1,4 +1,4 @@
-import { getRelationID } from "../utils"
+import { formatID, getRelationID } from "../utils"
 
 export function formatToken(token:any) {
     const properties = token.properties
@@ -13,7 +13,7 @@ export function formatUser(user: any) {
     const properties = user.properties
     
     return {
-        id: properties.id.formula.string,
+        id: formatID(properties.id.formula.string),
         name: properties.name.title[0].text.content,
         username: properties.username.rich_text[0].plain_text,
         position: properties.position.select.name,
