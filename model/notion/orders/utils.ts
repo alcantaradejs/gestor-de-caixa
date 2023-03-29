@@ -1,14 +1,14 @@
 import { getRelationID } from "../utils"
 
 export type createOrder = {
-    clientID: string
+    clientID: string | string[]
     stockID: string | string[]
     paid: number
     pix: number
 }
 
 export type order = {
-    clientID: string
+    clientID: string | string[]
     stockID: string | string[]
     total: number
     owed: number
@@ -22,7 +22,7 @@ export function formatOrder(order:any):order {
     const properties = order.properties
 
     return {
-        clientID: properties.client.relation[0].id,
+        clientID: getRelationID(properties.client.relation),
         stockID: getRelationID(properties.client.relation),
         total: properties.total.rollup.number,
         owed: properties.owed.number,

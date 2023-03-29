@@ -16,7 +16,7 @@ export function createRelation(relation: string | string[]):{id: string}[] {
 }
 
 export function formatID(id:string) {
-    return id.match(/[a-z]|[0-9]/gi)?.join("")
+    return id.match(/[a-z]|[0-9]/gi)?.join("") ?? ""
 }
 
 export const notion = new Client({
