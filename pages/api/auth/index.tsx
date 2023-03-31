@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     switch (req.method) {
-        case "GET":
+        case "POST":
             const user = await auth(req.body)
             if (user) res.status(200).json(user)
             else res.status(404).json({})
