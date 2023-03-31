@@ -12,10 +12,12 @@ type authContext = {
     user?: user
     token?:string
     signIn: ({}: signInData) => Promise<void>
+    signOut: () => void
 }
 
 const AuthContext = createContext<authContext>({
-    signIn: async ({}: signInData) => {}
+    signIn: async ({}: signInData) => {},
+    signOut: () => {}
 })
 
 type authProviderProps = {
@@ -34,8 +36,13 @@ export function AuthProvider({children}:authProviderProps) {
         setToken(response.data.tokens)
     }
 
+    function signOut() {
+        setUser(undefined)
+        setToken(undefined)
+    }
+
     return (
-        <AuthContext.Provider value={{isAuthenticated, user, token, signIn}}>
+        <AuthContext.Provider value={{isAuthenticated, user, token, signIn, signOut}}>
             {children}
         </AuthContext.Provider>
     )

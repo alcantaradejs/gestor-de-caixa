@@ -2,7 +2,7 @@ import { useAuth } from '@/contexts/auth'
 import Head from 'next/head'
 
 export default function Home() {
-  const {isAuthenticated, user} = useAuth()
+  const {isAuthenticated, user, signOut} = useAuth()
 
   return (
     <>
@@ -19,6 +19,7 @@ export default function Home() {
       '>
         <h1 className='text-xl font-bold'>🚧Projeto em desenvolvimento🚧</h1>
         {isAuthenticated ? `bem vindo ${user?.name}` : ""}
+        <button onClick={signOut}>Sign Out</button>
       </main>
     </>
   )
