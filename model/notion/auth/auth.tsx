@@ -53,7 +53,7 @@ export async function auth({token, username, pass}:filter) {
                    {
                         property: "pass",
                         rich_text: {
-                            equals: pass
+                            equals: pass != "" ? pass : 'a' 
                         }
                    }
                 ]
