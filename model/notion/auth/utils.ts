@@ -9,6 +9,14 @@ export function formatToken(token:any) {
     }
 }
 
+export type user = {
+    id: string,
+    name: string,
+    username: string,
+    position: string,
+    tokens: string,
+}
+
 export function formatUser(user: any) {
     const properties = user.properties
     
