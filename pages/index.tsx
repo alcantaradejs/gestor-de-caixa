@@ -1,9 +1,8 @@
 import { useAuth } from '@/contexts/auth'
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function Home() {
-  const {isAuthenticated, user, signOut} = useAuth()
-
   return (
     <>
       <Head>
@@ -18,8 +17,7 @@ export default function Home() {
       flex flex-col justify-center items-center
       '>
         <h1 className='text-xl font-bold'>🚧Projeto em desenvolvimento🚧</h1>
-        {isAuthenticated ? `bem vindo ${user?.name}` : ""}
-        <button onClick={signOut}>Sign Out</button>
+        <Link href="/app">app</Link>
       </main>
     </>
   )

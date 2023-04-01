@@ -1,18 +1,20 @@
 import { useAuth } from "@/contexts/auth";
 import { IdentificationBadge } from "@phosphor-icons/react";
 import Router from "next/router";
-import { FieldValue, useForm } from "react-hook-form";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function LoginPage() {
+    const [error, setError] = useState<string | undefined>(undefined)
     const {register, handleSubmit} = useForm()
     const {signIn} = useAuth()
 
     async function handleSignIn({username, pass}:any) {
         try {
             await signIn({username, pass})
-            Router.push("/")   
+            Router.push("/app")   
         } catch (error) {
-            console.log("usuario ou senha incorreto")
+            setError("usuario ou senha incorreto")
         }
     }
 
@@ -49,6 +51,7 @@ export default function LoginPage() {
                 <button
                 className="mt-5 py-2 bg-sky-500 rounded-lg"
                 >Enviar</button>
+                {error ? <span className="text-red-500 text-center">{error}</span> : ""}
             </form>
         </div>
     )
