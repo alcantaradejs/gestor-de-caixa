@@ -1,6 +1,8 @@
-import { user } from "@/model/notion/auth/utils";
-import axios from "axios";
 import { createContext, useContext, useState } from "react";
+import { setCookie } from "nookies";
+import axios from "axios";
+
+import { user } from "@/model/notion/auth/utils";
 
 type signInData = {
     username: string
@@ -34,6 +36,10 @@ export function AuthProvider({children}:authProviderProps) {
         const response = await axios.post("/api/auth", {username, pass})
         setUser(response.data)
         setToken(response.data.tokens)
+
+        setCookie(undefined, "user_token", response.data.tokens, {
+            maxAge: 60 * 60 * 24 // 24 hours
+        })
     }
 
     function signOut() {
