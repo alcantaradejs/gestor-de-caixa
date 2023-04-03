@@ -1,6 +1,6 @@
 type PageProps = {
     children: JSX.Element | JSX.Element[] | string,
-    className: string
+    className?: string
 }
 
 export function PageLayout({children, className}:PageProps) {
