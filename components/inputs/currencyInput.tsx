@@ -1,14 +1,21 @@
-import { Console } from "console"
+import { useCallback, useState } from "react"
 
-export type numberInputProps = {
+export type currencyInputProps = {
     id: string,
     label: string,
-    value: number,
+    initialValue: number,
     onChange: (value:number) => void
-    format?: "R$"
 }
 
-export function NumberInput({id, label, format, value, onChange}:numberInputProps) {    
+export function CurrencyInput({id, initialValue, label, onChange}:currencyInputProps) {
+    const [value, setValue] = useState<string>((initialValue * 100).toString())
+    
+    const mask = useCallback((text:string) => {
+        text = text.replace(/(\D)/, "")
+        text = text.replace(/(\d)(\d{2})$/, "$1.$2")
+        return text
+    }, [])
+    
     return(
         <div
         className="
@@ -25,28 +32,19 @@ export function NumberInput({id, label, format, value, onChange}:numberInputProp
             px-2
             "
             >
-                {format}
+                R$
                 <input 
                 className="
                 w-full py-1 bg-transparent
                 "
                 type="text" 
                 id={id} 
-                value={ format == "R$" ? value.toFixed(2) : value}
+                value={mask(value)}
                 onChange={event => {
                     let value = event.currentTarget.value
-                    if (format == "R$") {
-                        value = value.replace(/(\D)/, "")
-                        value = value.replace(/(\d)(\d{2})$/, "$1.$2")
-    
-                        if (value.length <= 2) {
-                            onChange((Number(value)/100))
-                        } else {
-                            onChange(Number(value))
-                        }
-                    } else {
-                        onChange(Number(value))
-                    }
+                    value = mask(value)
+                    setValue(value)
+                    onChange(Number(value))
                 }}
                 />
             </div>
