@@ -1,15 +1,17 @@
 type PageProps = {
-    children: JSX.Element | JSX.Element[] | string
+    children: JSX.Element | JSX.Element[] | string,
+    className: string
 }
 
-export function PageLayout({children}:PageProps) {
+export function PageLayout({children, className}:PageProps) {
     return (
         <div
-        className="
+        className={`
         bg-background text-text
         w-screen min-h-screen
         px-[20px] py-[30px]
-        "
+        ${className}
+        `}
         >
             {children}
         </div>
