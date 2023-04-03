@@ -9,7 +9,7 @@ export function PageLayout({children, className}:PageProps) {
         className={`
         bg-background text-text
         w-screen min-h-screen
-        px-[20px] py-[30px]
+        p-[30px]
         ${className}
         `}
         >
