@@ -6,15 +6,18 @@ import { useEffect, useState } from "react"
 import { NumberInput } from "../../inputs/numberInput"
 import { CurrencyInput } from "@/components/inputs/currencyInput"
 
-export type CartProductProps = product
+export type CartProductProps = product & {
+    onChangeTotal?: (id:string, value:number) => void
+}
 
-export function CartProduct({id, product, sel}:CartProductProps) {
+export function CartProduct({id, product, sel, onChangeTotal}:CartProductProps) {
     const [amount, setAmaount] = useState<number>(0)
     const [price, setPrice] = useState<number>(sel)
     const [total, setTotal] = useState<number>(0)
 
     useEffect(() => {
         setTotal(price * amount)
+        onChangeTotal ? onChangeTotal(id, price * amount) : null
     }, [amount, price])
     
     return (

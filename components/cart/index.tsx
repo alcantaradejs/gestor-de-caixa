@@ -1,5 +1,5 @@
 import * as Accordion from "@radix-ui/react-accordion"
-import { createContext, useEffect, useState } from "react"
+import { createContext, useCallback, useEffect, useState } from "react"
 import { CartProduct, CartProductProps } from "../product/cartProduct"
 
 export function Cart() {
@@ -18,6 +18,23 @@ export function Cart() {
             sel: 4.5,
         }
     ])
+
+    const totalList:{id:string, value:number}[] = []
+    
+    const onChangeTotal = useCallback((id:string, value:number) => {
+        const index = totalList.findIndex(total => total.id == id)
+        if (totalList[index]) {
+            totalList[index].value = value
+        } else {
+            totalList.push({id, value})
+        }
+
+        console.log(totalList)
+        let total = 0
+        totalList.map(totalObj => total += totalObj.value)
+
+        setTotal(total)
+    }, [])
 
     return(
         <div 
@@ -39,6 +56,7 @@ export function Cart() {
                         <CartProduct 
                         key={product.id} 
                         {...product}
+                        onChangeTotal={onChangeTotal}
                         />
                     ))}
                 </Accordion.Root>
