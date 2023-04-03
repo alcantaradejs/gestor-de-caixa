@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react";
-import { setCookie } from "nookies";
+import { createContext, useContext, useEffect, useState } from "react";
+import { parseCookies, setCookie } from "nookies";
 import axios from "axios";
 
 import { user } from "@/model/notion/auth/utils";
@@ -31,6 +31,14 @@ export function AuthProvider({children}:authProviderProps) {
     const [token, setToken] = useState<string | undefined>(undefined)
 
     let isAuthenticated = !!user
+
+    useEffect(() => {
+        const {"user_token":token} = parseCookies()
+        axios.post("/api/auth", {token}).then((response) => {
+            setUser(response.data)
+            setToken(response.data.tokens)
+        }).catch(() => {})
+    })
     
     async function signIn({username, pass}:signInData) {
         const response = await axios.post("/api/auth", {username, pass})
