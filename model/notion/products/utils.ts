@@ -1,5 +1,3 @@
-import { NotionMap } from "notion-types"
-
 export type product = {
     id: string
     product: string
