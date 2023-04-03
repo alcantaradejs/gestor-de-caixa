@@ -14,10 +14,14 @@ export default function Home() {
       <main 
       className='
       w-screen h-screen 
-      flex flex-col justify-center items-center
+      flex flex-col justify-center items-center gap-3
+      bg-background text-text
       '>
-        <h1 className='text-xl font-bold'>🚧Projeto em desenvolvimento🚧</h1>
-        <Link href="/app">app</Link>
+        <h1 className='text-xl font-bold'>🚧 em desenvolvimento 🚧</h1>
+        <Link 
+        href="/app"
+        className='bg-blue-500 px-5 py-2 rounded-lg'
+        >app</Link>
       </main>
     </>
   )
