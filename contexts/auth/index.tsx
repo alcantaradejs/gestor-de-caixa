@@ -34,10 +34,12 @@ export function AuthProvider({children}:authProviderProps) {
 
     useEffect(() => {
         const {"user_token":token} = parseCookies()
-        axios.post("/api/auth", {token}).then((response) => {
-            setUser(response.data)
-            setToken(response.data.tokens)
-        }).catch(() => {})
+        if (!token) {
+            axios.post("/api/auth", {token}).then((response) => {
+                setUser(response.data)
+                setToken(response.data.tokens)
+            }).catch(() => {})
+        }
     })
     
     async function signIn({username, pass}:signInData) {
