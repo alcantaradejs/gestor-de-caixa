@@ -1,27 +1,16 @@
+import { product } from "@/model/notion/products/utils"
 import * as Accordion from "@radix-ui/react-accordion"
 import { createContext, useCallback, useEffect, useState } from "react"
 import { CartProduct, CartProductProps } from "../product/cartProduct"
+import { AddProduct } from "./addproduct"
 
 export function Cart() {
     const [total, setTotal] = useState<number>(0)
-    const [ productList, setProductList ] = useState<CartProductProps[]>([
-        {
-            id: "adsfsffdads",
-            product: "caixa de exb",
-            resel: 210,
-            sel: 210,
-        },
-        {
-            id: "adsfsffafdsfasdfafs",
-            product: "agua",
-            resel: 4.5,
-            sel: 4.5,
-        }
-    ])
+    const [ products, setProducts ] = useState<CartProductProps[]>([])
 
     const totalList:{id:string, value:number}[] = []
     
-    const onChangeTotal = useCallback((id:string, value:number) => {
+    const onChangeTotal = (id:string, value:number) => {
         const index = totalList.findIndex(total => total.id == id)
         if (totalList[index]) {
             totalList[index].value = value
@@ -29,12 +18,18 @@ export function Cart() {
             totalList.push({id, value})
         }
 
-        console.log(totalList)
         let total = 0
         totalList.map(totalObj => total += totalObj.value)
 
         setTotal(total)
-    }, [])
+    }
+
+    const addProduct = (product:product) => {
+        const productItem = products.find(productItem => productItem.id == product.id)
+        if (productItem == undefined) {
+            setProducts(previousProducts => [product, ...previousProducts])
+        }
+    }
 
     return(
         <div 
@@ -52,7 +47,7 @@ export function Cart() {
                     {total.toLocaleString('pt-BR', {style:"currency", currency:"BRL"})}
                 </div>
                 <Accordion.Root type="single" collapsible>
-                    {productList.map(product => (
+                    {products.map(product => (
                         <CartProduct 
                         key={product.id} 
                         {...product}
@@ -60,6 +55,7 @@ export function Cart() {
                         />
                     ))}
                 </Accordion.Root>
+                <AddProduct onSelectProduct={addProduct}/>
         </div>
     )
 }
