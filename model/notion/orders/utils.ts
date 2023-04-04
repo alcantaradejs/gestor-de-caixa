@@ -1,8 +1,8 @@
 import { getRelationID } from "../utils"
 
 export type createOrder = {
-    clientID: string | string[]
-    stockID: string | string[]
+    clientID: string
+    stockID: string
     paid: number
     pix: number
 }
